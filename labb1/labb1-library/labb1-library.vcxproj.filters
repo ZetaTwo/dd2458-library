@@ -18,5 +18,8 @@
     <ClInclude Include="fenwick.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="intervalcover.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
