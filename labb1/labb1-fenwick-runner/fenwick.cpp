@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-#include "../labb1-library/fenwick.hpp"
+#include "fenwick.hpp"
 
 int main() {
   int N, Q;
@@ -15,22 +15,22 @@ int main() {
     int param1, param2;
     cin >> command;
     
-    switch (command)
-    {
-    case '?':
+    //Query
+    if (command == '?') {
       cin >> param1;
+      //Empty set
       if (param1 == 0) {
         cout << 0 << endl;
       }
+      //Range
       else {
-        cout << tree.getsum(0, param1-1) << endl;
+        cout << tree.getsum(0, param1 - 1) << endl;
       }
-      break;
-    case '+':
+    }
+    //Modification
+    else {
       cin >> param1 >> param2;
       tree.add(param1, param2);
-    default:
-      break;
     }
   }
 
