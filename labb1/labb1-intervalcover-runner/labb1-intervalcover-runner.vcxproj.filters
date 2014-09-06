@@ -15,13 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="runner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="fenwick-tests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="intervalcover-tests.cpp">
+    <ClCompile Include="intervalcover.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

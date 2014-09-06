@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb1-library", "labb1-library\labb1-library.vcxproj", "{B7413954-3BB7-402F-8B59-BC1D3AC51817}"
 EndProject
@@ -11,6 +11,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb1-tests", "labb1-tests\
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb1-fenwick-runner", "labb1-fenwick-runner\labb1-fenwick-runner.vcxproj", "{71BDA717-F1F6-4BC4-AB80-01C7FB44D6E7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb1-intervalcover-runner", "labb1-intervalcover-runner\labb1-intervalcover-runner.vcxproj", "{7C770E3A-6ADC-49B5-90F6-03B999576522}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B7413954-3BB7-402F-8B59-BC1D3AC51817} = {B7413954-3BB7-402F-8B59-BC1D3AC51817}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +35,10 @@ Global
 		{71BDA717-F1F6-4BC4-AB80-01C7FB44D6E7}.Debug|Win32.Build.0 = Debug|Win32
 		{71BDA717-F1F6-4BC4-AB80-01C7FB44D6E7}.Release|Win32.ActiveCfg = Release|Win32
 		{71BDA717-F1F6-4BC4-AB80-01C7FB44D6E7}.Release|Win32.Build.0 = Release|Win32
+		{7C770E3A-6ADC-49B5-90F6-03B999576522}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7C770E3A-6ADC-49B5-90F6-03B999576522}.Debug|Win32.Build.0 = Debug|Win32
+		{7C770E3A-6ADC-49B5-90F6-03B999576522}.Release|Win32.ActiveCfg = Release|Win32
+		{7C770E3A-6ADC-49B5-90F6-03B999576522}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
