@@ -5,7 +5,8 @@ using namespace std;
 
 int main() {
   int N, Q;
-  cin >> N >> Q;
+  //cin >> N >> Q;
+  scanf("%d %d\n", &N, &Q);
   
   FenwickTree<long long> tree(N);
 
@@ -14,17 +15,20 @@ int main() {
     char command;
     int param1, param2;
 
-    cin >> command;
+    //cin >> command;
+    scanf("%c", &command);
     
-    //Query
-    if (command == '?') {
-      cin >> param1;
-      cout << tree.sum(0, param1 - 1) << endl;
-    }
     //Modification
-    else {
-      cin >> param1 >> param2;
+    if (command == '+') {
+      //cin >> param1 >> param2;
+      scanf("%d %d\n", &param1, &param2);
       tree.add(param1, param2);
+    }
+    //Query
+    else {
+      //cin >> param1;
+      scanf("%d\n", &param1);
+      cout << tree.sum(0, param1 - 1) << endl;
     }
   }
 
