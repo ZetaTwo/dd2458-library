@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-using std::vector;
 
 template<typename T>
 class FenwickTree {
@@ -20,7 +19,7 @@ public:
   }
 
 private:
-  vector<T> tree;
+  std::vector<T> tree;
 
   T sum(int index) {
     T sum = 0;
