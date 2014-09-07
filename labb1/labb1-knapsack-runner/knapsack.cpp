@@ -17,14 +17,10 @@ int main() {
   //Continue while there are more test cases
   while (scanf("%lf %d\n", &C, &n) == 2) {
     //Read items
-    vector<knapsack::item> items;
+    vector<knapsack::item> items(n);
     for (size_t i = 0; i < (size_t)n; i++)
     {
-      value_type value;
-      weight_type weight;
-      //cin >> value >> weight;
-      scanf("%d %d\n", &value, &weight);
-      items.push_back({ value, weight });
+      scanf("%d %d\n", &items[i].value, &items[i].weight);
     }
 
     //Perform dynamic programming knapsack
@@ -32,20 +28,18 @@ int main() {
 
     //Output result
     printf("%d\n", knapsack_indices.size());
-    if (knapsack_indices.size() > 0) {
-      bool first = true;
-      for (vector<size_t>::const_iterator itr = knapsack_indices.begin(); itr != knapsack_indices.end(); itr++)
-      {
-        if (first) {
-          first = false;
-        }
-        else {
-          printf(" ");
-        }
-        printf("%d", *itr);
+    bool first = true;
+    for (vector<size_t>::const_iterator itr = knapsack_indices.begin(); itr != knapsack_indices.end(); itr++)
+    {
+      if (first) {
+        first = false;
       }
-      printf("\n");
+      else {
+        printf(" ");
+      }
+      printf("%d", *itr);
     }
+    printf("\n");
   }
 
   return 0;
