@@ -11,7 +11,7 @@ namespace knapsack {
   };
 
   std::vector<size_t> knapsack(const weight_type capacity, const std::vector<item>& items) {
-    std::vector<std::vector<value_type> > optimal(items.size() + 1, vector<int>(capacity + 1, 0));
+    std::vector<std::vector<value_type> > optimal(items.size() + 1, std::vector<int>(capacity + 1, 0));
 
     //Calculate dynprog table
     for (size_t n = 1; n <= items.size(); n++) {
@@ -29,7 +29,7 @@ namespace knapsack {
     }
 
     //Backtrack which items used
-    vector<size_t> result;
+    std::vector<size_t> result;
     for (int nn = items.size(), ww = capacity; nn > 0 && ww > 0; nn--)
     {
       if (ww - items[nn - 1].weight >= 0 && optimal[nn][ww] - items[nn - 1].value == optimal[nn-1][ww - items[nn - 1].weight]) {
