@@ -40,16 +40,18 @@ namespace intervalcover {
       
       //Pick interval that starts early enough and ends furthest away
       size_t candidate_index = *scan_index;
-      while (scan_index != indices.end() && intervals[*scan_index].start <= front) {
-        if (intervals[*scan_index].end > intervals[candidate_index].end) {
-          candidate_index = *scan_index;
+      if (intervals[*scan_index++].start <= front) {
+        while (scan_index != indices.end() && intervals[*scan_index].start <= front) {
+          if (intervals[*scan_index].end > intervals[candidate_index].end) {
+            candidate_index = *scan_index;
+          }
+          scan_index++;
         }
-        scan_index++;
+
+        //Update remaining interval
+        result.push_back(candidate_index);
+        front = intervals[candidate_index].end;
       }
-      
-      //Update remaining interval
-      result.push_back(candidate_index);
-      front = intervals[candidate_index].end;
     }
 
     //Did we succeed?
