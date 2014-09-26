@@ -81,6 +81,7 @@
     <ClInclude Include="fenwick.hpp" />
     <ClInclude Include="intervalcover.hpp" />
     <ClInclude Include="knapsack.hpp" />
+    <ClInclude Include="polymul.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

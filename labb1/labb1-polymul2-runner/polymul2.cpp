@@ -1,6 +1,9 @@
 #include <cstdio>
 #include <vector>
+#include <iterator>
 using namespace std;
+
+#include "polymul.hpp"
 
 #ifdef _WIN32
 #define scanf scanf_s
@@ -20,7 +23,7 @@ int main() {
     
     //Get polynomial 1
     scanf("%d", &degree1);
-    for (int j = 0; j < degree1; j++)
+    for (int j = 0; j <= degree1; j++)
     {
       int coeff;
       scanf("%d", &coeff);
@@ -29,19 +32,19 @@ int main() {
 
     //Get polynomial 2
     scanf("%d", &degree2);
-    for (int j = 0; j < degree2; j++)
+    for (int j = 0; j <= degree2; j++)
     {
       int coeff;
       scanf("%d", &coeff);
-      polynomial1.push_back(coeff);
+      polynomial2.push_back(coeff);
     }
 
     //Multiply
     vector<int> result;
-    //vector<int> result = polymul(polynomial1, polynomial2);
+    polymul<int>(polynomial1.cbegin(), polynomial1.cend(), polynomial2.cbegin(), polynomial2.cend(), std::back_inserter(result));
 
     //Output result
-    printf("%d\n", result.size());
+    printf("%lu\n", result.size() - 1);
     bool first = true;
     for (vector<int>::const_iterator coeff = result.cbegin(); coeff != result.cend(); coeff++)
     {

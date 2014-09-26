@@ -24,5 +24,8 @@
     <ClInclude Include="knapsack.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="polymul.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
