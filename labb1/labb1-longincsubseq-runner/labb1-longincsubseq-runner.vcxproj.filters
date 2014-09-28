@@ -15,20 +15,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="fenwick.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="intervalcover.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="knapsack.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="polymul.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="longincsubseq.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClCompile Include="longincsubseq.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
