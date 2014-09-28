@@ -2,24 +2,12 @@
 #include <algorithm>
 
 template<typename T>
-inline std::vector<T> low_high_sum(std::vector<T> low, std::vector<T> high)
+void low_high_sum(std::vector<T>& low, std::vector<T>& high)
 {
-  std::vector<T> result(std::max(low.size(), high.size()));
-
-  for (std::vector<T>::iterator itr = result.begin(), low_itr = low.begin(), high_itr = high.begin(); itr != result.end(); itr++)
+  for (std::vector<T>::iterator low_itr = low.begin(), high_itr = high.begin(); high_itr != high.end(); high_itr++, low_itr++)
   {
-    if (low_itr != low.end()) {
-      *itr += *low_itr;
-      low_itr++;
-    }
-
-    if (high_itr != high.end()) {
-      *itr += *high_itr;
-      high_itr++;
-    }
+    *low_itr += *high_itr;
   }
-
-  return result;
 }
 
 template<typename T>
@@ -60,9 +48,9 @@ std::vector<T> polymul(const std::vector<T>& polynomial1, const std::vector<T>& 
   std::vector<T> z2 = polymul<T>(high1, high2); // (high1 * high2)
 
   // (high1 + low1) * (high2 + low2)
-  std::vector<T> highlow1 = low_high_sum(low1, high1);
-  std::vector<T> highlow2 = low_high_sum<T>(low2, high2);
-  std::vector<T> z1 = polymul<T>(highlow1, highlow2);
+  low_high_sum(low1, high1);
+  low_high_sum(low2, high2);
+  std::vector<T> z1 = polymul<T>(low1, low2);
 
   // (z2*10^(2*m2))+((z1-z2-z0)*10^(m2))+(z0)
   size_t pos = 0;
