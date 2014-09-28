@@ -1,69 +1,74 @@
 #include <vector>
 #include <algorithm>
 
-template<typename T, class iterator_type_input, class iterator_type_result>
-void low_high_sum(size_t mid_size, iterator_type_input poly_begin, iterator_type_input low, iterator_type_input poly_end, iterator_type_result result)
+template<typename T>
+inline std::vector<T> low_high_sum(std::vector<T> low, std::vector<T> high)
 {
-  iterator_type_input high_itr = low;
-  iterator_type_input low_itr = poly_begin;
+  std::vector<T> result(std::max(low.size(), high.size()));
 
-  while (low_itr != low || high_itr != poly_end)
+  for (std::vector<T>::iterator itr = result.begin(), low_itr = low.begin(), high_itr = high.begin(); itr != result.end(); itr++)
   {
-    if (low_itr != low) {
-      *result += *low_itr;
+    if (low_itr != low.end()) {
+      *itr += *low_itr;
       low_itr++;
     }
 
-    if (high_itr != poly_end) {
-      *result += *high_itr;
+    if (high_itr != high.end()) {
+      *itr += *high_itr;
       high_itr++;
     }
-    result++;
   }
+
+  return result;
 }
 
-template<typename T, class iterator_type_input1, class iterator_type_input2, class iterator_type_result>
-void polymul(iterator_type_input1 poly1_begin, iterator_type_input1 poly1_end,
-  iterator_type_input2 poly2_begin, iterator_type_input2 poly2_end,
-  iterator_type_result result) {
+template<typename T>
+std::vector<T> polymul(const std::vector<T>& polynomial1, const std::vector<T>& polynomial2) {
+  typedef std::vector<T>::iterator poly_iterator;
 
-  size_t poly1_size = poly1_end - poly1_begin;
-  size_t poly2_size = poly2_end - poly2_begin;
-  size_t result_size = poly1_size + poly2_size - 2;
-
-  if (poly1_size == 0 || poly2_size == 0) {
-    *result = 0;
-    return;
+  if (polynomial1.size() == 0 || polynomial2.size() == 0) {
+     return std::vector<T>(1, 0);
   }
 
-  if (poly1_size == 1 && poly2_size == 1) {
-    *result = (*poly1_begin) * (*poly2_begin);
-    return;
+  if (polynomial1.size() == 1) {
+    std::vector<T> result(polynomial2);
+    for (poly_iterator itr = result.begin(); itr != result.end(); itr++)
+    {
+      *itr *= polynomial1.front();
+    }
+    return result;
   }
 
-  size_t max_size = std::max(poly1_size, poly2_size);
+  if (polynomial2.size() == 1) {
+    std::vector<T> result(polynomial1);
+    for (poly_iterator itr = result.begin(); itr != result.end(); itr++)
+    {
+      *itr *= polynomial2.front();
+    }
+    return result;
+  }
+
+  size_t max_size = std::max(polynomial1.size(), polynomial2.size());
   size_t mid_size = 1 + ((max_size - 1) / 2); //mid_size = ceil(max_size/2)
 
-  size_t z_size = std::max<size_t>(1, 2 * mid_size);
-  std::vector<T> z0(z_size), z1(z_size), z2(z_size);
+  std::vector<T> low1(polynomial1.begin(), polynomial1.begin() + std::min(mid_size, polynomial1.size()));
+  std::vector<T> low2(polynomial2.begin(), polynomial2.begin() + std::min(mid_size, polynomial2.size()));
+  std::vector<T> high1(polynomial1.begin() + std::min(mid_size, polynomial1.size()), polynomial1.end());
+  std::vector<T> high2(polynomial2.begin() + std::min(mid_size, polynomial2.size()), polynomial2.end());
 
-  iterator_type_input1 low1 = poly1_begin + std::min(mid_size, poly1_size);
-  iterator_type_input2 low2 = poly2_begin + std::min(mid_size, poly2_size);
-
-  polymul<T>(poly1_begin, low1, poly2_begin, low2, z0.begin()); // (low1 * low2)
-  polymul<T>(low1, poly1_end, low2, poly2_end, z2.begin()); // (high1 * high2)
+  std::vector<T> z0 = polymul<T>(low1, low2); // (low1 * low2)
+  std::vector<T> z2 = polymul<T>(high1, high2); // (high1 * high2)
 
   // (high1 + low1) * (high2 + low2)
-  vector<T> highlow1(mid_size), highlow2(mid_size);
-  low_high_sum<T>(mid_size, poly1_begin, low1, poly1_end, highlow1.begin());
-  low_high_sum<T>(mid_size, poly2_begin, low2, poly2_end, highlow2.begin());
-  polymul<T>(highlow1.cbegin(), highlow1.cend(), highlow2.cbegin(), highlow2.cend(), z1.begin());
+  std::vector<T> highlow1 = low_high_sum(low1, high1);
+  std::vector<T> highlow2 = low_high_sum<T>(low2, high2);
+  std::vector<T> z1 = polymul<T>(highlow1, highlow2);
 
   // (z2*10^(2*m2))+((z1-z2-z0)*10^(m2))+(z0)
   size_t pos = 0;
   typename vector<T>::const_iterator z0itr = z0.cbegin(), z1itr = z1.cbegin(), z2itr = z2.cbegin(), z0itr2 = z0.cbegin(), z2itr2 = z2.cbegin();
-  while (pos <= result_size && (z0itr != z0.end() || z1itr != z1.end() || z2itr != z2.end() || z0itr2 != z0.end() || z2itr2 != z2.end()))
-  {
+  std::vector<T> result(polynomial1.size() + polynomial2.size() - 1);
+  for (poly_iterator res = result.begin(); res != result.end(); res++) {
     T val = T();
 
     // +z0
@@ -94,9 +99,9 @@ void polymul(iterator_type_input1 poly1_begin, iterator_type_input1 poly1_end,
       z2itr++;
     }
 
-    *result++ = val;
+    *res = val;
     pos++;
   }
 
-  return;
+  return result;
 }

@@ -17,31 +17,27 @@ int main() {
   //Perform each test case
   for (int i = 0; i < T; i++)
   {
-    //Polynomial data
+    //Polynomial degrees
     int degree1, degree2;
-    vector<int> polynomial1, polynomial2;
     
     //Get polynomial 1
     scanf("%d", &degree1);
+    vector<int> polynomial1(degree1+1);
     for (int j = 0; j <= degree1; j++)
     {
-      int coeff;
-      scanf("%d", &coeff);
-      polynomial1.push_back(coeff);
+      scanf("%d", &polynomial1[j]);
     }
 
     //Get polynomial 2
     scanf("%d", &degree2);
+    vector<int> polynomial2(degree2+1);
     for (int j = 0; j <= degree2; j++)
     {
-      int coeff;
-      scanf("%d", &coeff);
-      polynomial2.push_back(coeff);
+      scanf("%d", &polynomial2[j]);
     }
 
     //Multiply
-    vector<int> result;
-    polymul<int>(polynomial1.cbegin(), polynomial1.cend(), polynomial2.cbegin(), polynomial2.cend(), std::back_inserter(result));
+    vector<int> result = polymul<int>(polynomial1, polynomial2);
 
     //Output result
     printf("%lu\n", result.size() - 1);
