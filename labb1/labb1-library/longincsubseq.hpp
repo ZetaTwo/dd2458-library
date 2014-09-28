@@ -1,6 +1,12 @@
+// Longest increasing subsequence (n log n implementation)
+// -----------------------------------------
+// Authors: Magnus Olsson  (magolsso@kth.se)
+//          Calle Svensson (carlsven@kth.se)
+
 #include <vector>
 
-std::vector<int> longest_seq(vector<int> &list)
+// Returns a vector of indices pointing to the elements in the longest sequence
+std::vector<int> longest_seq(vector<int>& list)
 {
   std::vector<int> indices;
   std::vector<int> p(list.size());
