@@ -14,6 +14,7 @@
     <ProjectGuid>{5DBE8068-96E2-4F69-B912-98D263E61527}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>labb1polymul2runner</RootNamespace>
+    <ProjectName>labb1-polymul-runner</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -80,7 +81,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="polymul2.cpp" />
+    <ClCompile Include="polymul.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

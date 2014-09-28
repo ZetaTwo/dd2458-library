@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="polymul2.cpp">
+    <ClCompile Include="polymul.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

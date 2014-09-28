@@ -37,7 +37,7 @@ int main() {
     }
 
     //Multiply
-    vector<int> result = polymul<int>(polynomial1, polynomial2);
+    vector<int> result = polymul::polymul<int>(polynomial1, polynomial2);
 
     //Output result
     printf("%lu\n", result.size() - 1);
