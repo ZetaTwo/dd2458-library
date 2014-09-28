@@ -12,6 +12,10 @@ public:
     tree = new T[size];
   }
 
+  ~FenwickTree() {
+    delete[] tree;
+  }
+
   // Increases value of i-th element by delta
   void add(int i, T delta) {
     for (; i < size; i |= i + 1)
