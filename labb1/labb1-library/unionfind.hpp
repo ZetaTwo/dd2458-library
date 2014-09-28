@@ -1,3 +1,5 @@
+// Based on: http://www.cs.princeton.edu/courses/archive/spring07/cos226/lectures/01union-find.pdf
+
 class UnionFind {
 public:
 	UnionFind(int N) {
