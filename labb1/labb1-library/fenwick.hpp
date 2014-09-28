@@ -1,26 +1,33 @@
-#pragma once
+// Fenwick Tree implementation
+// -----------------------------------------
+// Authors: Magnus Olsson  (magolsso@kth.se)
+//          Calle Svensson (carlsven@kth.se)
 
-#include <vector>
+#pragma once
 
 template<typename T>
 class FenwickTree {
 public:
-  FenwickTree(int size) {
-    tree.resize(size);
+  FenwickTree(int size): size(size) {
+    tree = new T[size];
   }
 
+  // Increases value of i-th element by delta
   void add(int i, T delta) {
-    for (; i < (int)tree.size(); i |= i + 1)
+    for (; i < size; i |= i + 1)
       tree[i] += delta;
   }
 
+  // Returns sum of elements with indexes left to right, inclusive
   T sum(int left, int right) {
     return sum(right) - sum(left - 1);
   }
 
 private:
-  std::vector<T> tree;
+  T* tree;
+  int size;
 
+  // Calculates sum from index 0 to given input
   T sum(int index) {
     T sum = 0;
 
