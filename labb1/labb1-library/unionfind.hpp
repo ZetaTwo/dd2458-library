@@ -1,4 +1,8 @@
+// Quick Union Find implementation
 // Based on: http://www.cs.princeton.edu/courses/archive/spring07/cos226/lectures/01union-find.pdf
+// -----------------------------------------
+// Authors: Magnus Olsson  (magolsso@kth.se)
+//          Calle Svensson (carlsven@kth.se)
 
 class UnionFind {
 public:
@@ -16,6 +20,7 @@ public:
 		delete [] size;
 	}
 
+	// returns root of element
 	int find(int p)	{
 		int root = p;
 		while (root != pos[root])
@@ -28,6 +33,7 @@ public:
 		return root;
 	}
 
+	// union the sets containing x and y
 	void unite(int x, int y) {
 		int i = find(x);
 		int j = find(y);
@@ -40,9 +46,11 @@ public:
 		}
 	}
 
+	// checks if x and y are in the same set
 	bool connected(int x, int y) {
 		return find(x) == find(y);
 	}
+
 private:
 	int* pos;
 	int* size;
