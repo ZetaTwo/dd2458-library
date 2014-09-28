@@ -30,6 +30,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb1-unionfind-runner", "l
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb1-polymul-runner", "labb1-polymul-runner\labb1-polymul-runner.vcxproj", "{5DBE8068-96E2-4F69-B912-98D263E61527}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb1-equationsolver-runner", "labb1-equationsolver-runner\labb1-equationsolver-runner.vcxproj", "{DE249C62-D04A-46EF-A361-0869FF42DF21}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -68,6 +70,10 @@ Global
 		{5DBE8068-96E2-4F69-B912-98D263E61527}.Debug|Win32.Build.0 = Debug|Win32
 		{5DBE8068-96E2-4F69-B912-98D263E61527}.Release|Win32.ActiveCfg = Release|Win32
 		{5DBE8068-96E2-4F69-B912-98D263E61527}.Release|Win32.Build.0 = Release|Win32
+		{DE249C62-D04A-46EF-A361-0869FF42DF21}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DE249C62-D04A-46EF-A361-0869FF42DF21}.Debug|Win32.Build.0 = Debug|Win32
+		{DE249C62-D04A-46EF-A361-0869FF42DF21}.Release|Win32.ActiveCfg = Release|Win32
+		{DE249C62-D04A-46EF-A361-0869FF42DF21}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

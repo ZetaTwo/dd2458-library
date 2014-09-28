@@ -11,13 +11,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{B7413954-3BB7-402F-8B59-BC1D3AC51817}</ProjectGuid>
+    <ProjectGuid>{DE249C62-D04A-46EF-A361-0869FF42DF21}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>labb1library</RootNamespace>
+    <RootNamespace>labb1equationsolverrunner</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -41,9 +41,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>../labb1-library;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>../labb1-library;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -78,13 +80,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="equationsolver.hpp" />
-    <ClInclude Include="fenwick.hpp" />
-    <ClInclude Include="intervalcover.hpp" />
-    <ClInclude Include="knapsack.hpp" />
-    <ClInclude Include="longincsubseq.hpp" />
-    <ClInclude Include="polymul.hpp" />
-    <ClInclude Include="unionfind.hpp" />
+    <ClCompile Include="equationsolver.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
