@@ -5,7 +5,7 @@
 
 #include <vector>
 
-// Returns a vector of indices pointing to the elements in the longest sequence
+// Returns a vector of indices pointing to the elements in the longest increasing subsequence of list
 std::vector<int> longest_seq(vector<int>& list)
 {
   std::vector<int> indices;
@@ -16,12 +16,14 @@ std::vector<int> longest_seq(vector<int>& list)
   indices.push_back(0);
 
   for (size_t i = 1; i < list.size(); i++) {
+    //Is next element larger?
     if (list[indices.back()] < list[i]) {
       p[i] = indices.back();
       indices.push_back(i);
       continue;
     }
 
+    //Binary search
     int low = 0;
     int hi = indices.size() - 1;
     while (low < hi) {

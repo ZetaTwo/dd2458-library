@@ -1,13 +1,20 @@
+// Interval cover algorithm
+// -----------------------------------------
+// Authors: Magnus Olsson  (magolsso@kth.se)
+//          Calle Svensson (carlsven@kth.se)
+
 #include <vector>
 #include <algorithm>
 
 namespace intervalcover {
+  //An interval covering [start, end]
   template<typename T>
   struct interval {
     T start;
     T end;
   };
 
+  //Used internally to sort the indices of the intervals on increasing start order
   template<typename T>
   struct interval_indices_cmp {
     const std::vector<interval<T> >&intervals;
@@ -20,6 +27,7 @@ namespace intervalcover {
     }
   };
 
+  //Given a list, intervals, and a target interval, target, calculates a minimum size subset of intervals which covers target and returns a list of indices to the intervals of that subset
   template<typename T>
   std::vector<size_t> cover(const interval<T>& target, const std::vector<interval<T> >& intervals) {
     //Create indices vector
