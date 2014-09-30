@@ -1,9 +1,16 @@
+// Polynomial multiplication algorithm
+// Based on: http://en.wikipedia.org/wiki/Karatsuba_algorithm
+// -----------------------------------------
+// Authors: Magnus Olsson  (magolsso@kth.se)
+//          Calle Svensson (carlsven@kth.se)
+
 #include <vector>
 #include <algorithm>
 
 namespace polymul {
 
   //Calculates the (low+high) vector in the polymul algorithm
+  //This function is used internally in the algorithm and should not be called directly
   template<typename T>
   void low_high_sum(std::vector<T>& low, std::vector<T>& high)
   {
@@ -15,6 +22,7 @@ namespace polymul {
 
   //Naive quadratic polynomial multiplication.
   //Used for polynomials of small size where the n^(log2(3)) algorithm has too much overhead.
+  //This function is used internally in the algorithm and should not be called directly
   template<typename T>
   std::vector<T> polymul_quad(const std::vector<T>& polynomial1, const std::vector<T>& polynomial2) {
     std::vector<T> result(polynomial1.size() + polynomial2.size() - 1, 0);
@@ -31,6 +39,9 @@ namespace polymul {
   }
 
   //Algorithm for multiplying two polynomials. O(n^log2(3))
+  //polynomial1 and polynomial2 are two vector<T> containing the coefficients of type T of the two polynomials
+  //The function returns a vector<T> containing the coefficients of type T of the product of polynomial1 and polynomial2
+  //All coefficients are in increasing magnitude order, i.e. a0 + a1*x + a2*x^2 ...
   template<typename T>
   std::vector<T> polymul(const std::vector<T>& polynomial1, const std::vector<T>& polynomial2) {
     typedef typename std::vector<T>::iterator poly_iterator;

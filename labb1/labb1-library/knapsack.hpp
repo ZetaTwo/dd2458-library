@@ -1,15 +1,23 @@
+// Integer knapsack problem solver
+// -----------------------------------------
+// Authors: Magnus Olsson  (magolsso@kth.se)
+//          Calle Svensson (carlsven@kth.se)
+
 #include <vector>
 #include <algorithm>
 
 namespace knapsack {
+  //Half-way to template version of this algorithm
   typedef int weight_type;
   typedef int value_type;
 
+  //An item for the knapsack algorithm
   struct item {
     value_type value;
     weight_type weight;
   };
 
+  //Given a capacity and a list of items (value, weight) returns a vector of indices for the maximum value subset of items with total weight <= capacity
   std::vector<size_t> knapsack(const weight_type capacity, const std::vector<item>& items) {
     std::vector<std::vector<value_type> > optimal(items.size() + 1, std::vector<int>(capacity + 1, 0));
 

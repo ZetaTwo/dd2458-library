@@ -10,6 +10,7 @@
 template<typename T>
 class FenwickTree {
 public:
+  //Create a Fenwick tree of given size
   FenwickTree(int size): size(size) {
     tree = new T[size];
     std::fill_n(tree, size, 0);

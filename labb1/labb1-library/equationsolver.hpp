@@ -1,3 +1,8 @@
+// Linear equation solver (broken)
+// -----------------------------------------
+// Authors: Magnus Olsson  (magolsso@kth.se)
+//          Calle Svensson (carlsven@kth.se)
+
 #include <vector>
 #include <stdexcept>
 
