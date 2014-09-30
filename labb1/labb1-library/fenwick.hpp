@@ -5,11 +5,14 @@
 
 #pragma once
 
+#include <algorithm>
+
 template<typename T>
 class FenwickTree {
 public:
   FenwickTree(int size): size(size) {
     tree = new T[size];
+    std::fill_n(tree, size, 0);
   }
 
   ~FenwickTree() {
