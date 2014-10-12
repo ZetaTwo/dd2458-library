@@ -25,7 +25,7 @@ void dijkstra(Node* start) {
 
 		for (Edge* e : current->edges) {
 			Node* t = e->target;
-			unsigned int dist = current->value + e->weight;
+			int dist = current->value + e->weight;
 			if (dist < t->value) {
 				t->value = dist;
 				t->previous = current;
@@ -38,16 +38,14 @@ void dijkstra(Node* start) {
 // ------------------------------------------------------------------------- //
 
 vector<Node*> get_path(Node* target) {
-		vector<Node*> path;
-		for (Node* v = target; v != NULL; v = v->previous)
-			path.push_back(v);
-		reverse(path.begin(), path.end());
-		return path;
-	}
+	vector<Node*> path;
+	for (Node* v = target; v != NULL; v = v->previous)
+		path.push_back(v);
+	reverse(path.begin(), path.end());
+	return path;
+}
 
 // ------------------------------------------------------------------------- //
-
-
 
 int main() {
 
@@ -76,17 +74,16 @@ int main() {
 			if (dist == INT_MAX) {
 				printf("Impossible\n");
 			} else {
-				#ifdef PRINT_PATH
+#ifdef PRINT_PATH
 				vector<Node*> path = get_path(nodes[q]);
 				for (int i = 0; i < path.size(); i++) {
 					cout << path[i]->id << (i < path.size()-1?", ":"\n");
 				}
-				#else
+#else
 				printf("%d\n", dist);
-				#endif
+#endif
 			}
 		}
 		printf("\n");
 	}
-
 }
