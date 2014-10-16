@@ -3,21 +3,29 @@
 //          carlsven@kth.se
 #pragma once
 
+#include <vector>
 #include <queue>
 
 #include "graph.hpp"
+
+// Comparator function which makes priority_queue smallest first
+struct comp {
+    int operator() (const Node* n1,const Node* n2) {
+        return n1->value > n2->value;
+    }
+};
 
 //Perform dijkstra's algorithm from start node to all other nodes
 //After returning, every node in the graph will contain the length of the shortest path from start to that node.
 void dijkstra(Node* start) {
   //Iniate the queue and starting length
-  std::queue<Node*> q;
+  std::priority_queue<Node*, std::vector<Node*>, comp> q;
   start->value = 0;
   q.push(start);
 
   //For each remaining node
   while (!q.empty()) {
-    Node* current = q.front();
+    Node* current = q.top();
     q.pop();
 
     //Search all adjacent nodes
