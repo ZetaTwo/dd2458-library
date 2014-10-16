@@ -15,7 +15,7 @@ int main() {
       break;
     }
 
-    Graph graph(N);
+    KruskalGraph graph(N);
     for (int m = 0; m < M; m++)
     {
       int u, v, w;
@@ -25,10 +25,10 @@ int main() {
         std::swap(u, v);
       }
       
-      graph.add_edge(u, v, w);
+      graph.add_edge(u, v, { w });
     }
 
-    vector<Edge*> result = kruskal(graph);
+    vector<KruskalEdge*> result = kruskal(graph);
 
     if (graph.getSize() > 1 && result.size() == 0) {
       cout << "Impossible" << endl;
@@ -36,7 +36,7 @@ int main() {
     else {
       long sum = 0;
       for (auto e : result) {
-        sum += e->weight;
+        sum += e->extra.weight;
       }
       cout << sum << endl;
       for (auto e : result) {

@@ -24,5 +24,8 @@
     <ClInclude Include="kruskal.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="eulerianpath.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

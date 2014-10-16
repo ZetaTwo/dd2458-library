@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dijkstra.hpp" />
+    <ClInclude Include="eulerianpath.hpp" />
     <ClInclude Include="graph.hpp" />
     <ClInclude Include="kruskal.hpp" />
   </ItemGroup>

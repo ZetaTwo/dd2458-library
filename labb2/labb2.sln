@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb2-library", "labb2-libr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb2-minspantree-runner", "labb2-minspantree-runner\labb2-minspantree-runner.vcxproj", "{8127E226-0C25-4D9D-A135-C4B37303723B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb2-eulerianpath-runner", "labb2-eulerianpath-runner\labb2-eulerianpath-runner.vcxproj", "{D21FFD68-FDCC-476A-A435-51A4AC432B4E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -27,6 +29,10 @@ Global
 		{8127E226-0C25-4D9D-A135-C4B37303723B}.Debug|Win32.Build.0 = Debug|Win32
 		{8127E226-0C25-4D9D-A135-C4B37303723B}.Release|Win32.ActiveCfg = Release|Win32
 		{8127E226-0C25-4D9D-A135-C4B37303723B}.Release|Win32.Build.0 = Release|Win32
+		{D21FFD68-FDCC-476A-A435-51A4AC432B4E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D21FFD68-FDCC-476A-A435-51A4AC432B4E}.Debug|Win32.Build.0 = Debug|Win32
+		{D21FFD68-FDCC-476A-A435-51A4AC432B4E}.Release|Win32.ActiveCfg = Release|Win32
+		{D21FFD68-FDCC-476A-A435-51A4AC432B4E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -25,13 +25,13 @@ int main() {
     cin >> num_nodes >> num_edges >> num_queries >> start_node;
 		if (num_nodes+num_edges+num_queries+start_node == 0) break;
 
-    Graph graph(num_nodes);
+    DijkstraGraph graph(num_nodes);
 
     //Get edges
 		for (int i = 0; i < num_edges; i++) {
 			int fr, to, w;
       cin >> fr >> to >> w;
-      graph.add_edge(fr, to, w);
+      graph.add_edge(fr, to, { w });
 		}
 
     //Calculate shortest path
@@ -41,7 +41,7 @@ int main() {
 		for (int i = 0; i < num_queries; i++) {
 			int q;
       cin >> q;
-			int dist = graph[q]->value;
+			int dist = graph[q]->extra.value;
 
       //Impossible
 			if (dist == numeric_limits<int>::max()) {
