@@ -31,6 +31,7 @@ std::vector<KruskalEdge*> kruskal(KruskalGraph& graph) {
     }
   }
 
+  //Did we succeed?
   if (result.size() == graph.getSize()-1) {
     std::sort(result.begin(), result.end(), sort_edge_lexi<edge_weight, node_default>());
     return result;

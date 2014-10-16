@@ -19,8 +19,6 @@ struct edge_default {
 struct node_default {
 };
 
-
-
 //Forward declaration of node
 template<typename E = edge_default, typename N = node_default>
 class Node;
