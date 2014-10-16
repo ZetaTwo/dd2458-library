@@ -16,13 +16,15 @@ int main() {
       break;
     }
 
-    Graph graph(N);
+    Graph<> graph(N);
     for (int m = 0; m < M; m++)
     {
       int u, v;
       cin >> u >> v;
       graph.add_edge(u, v);
     }
+
+
 
   }
 
