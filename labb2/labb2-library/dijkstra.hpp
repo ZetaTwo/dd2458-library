@@ -10,9 +10,9 @@
 
 // Comparator function which makes priority_queue smallest first
 struct comp {
-    int operator() (const Node* n1,const Node* n2) {
-        return n1->value > n2->value;
-    }
+  int operator() (const Node* n1,const Node* n2) {
+    return n1->value > n2->value;
+  }
 };
 
 //Perform dijkstra's algorithm from start node to all other nodes
