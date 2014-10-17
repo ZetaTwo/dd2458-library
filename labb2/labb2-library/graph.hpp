@@ -7,14 +7,15 @@
 #include <vector>
 #include <algorithm>
 
+//Default edge and node types
+struct edge_default {};
+struct node_default {};
+
 //Forward declaration of node
 template<typename E = edge_default, typename N = node_default>
 class Node;
 
-//Edge and node types
-struct edge_default {};
-struct node_default {};
-
+//Other edge and node types
 struct edge_weight {
   int weight;
 };
