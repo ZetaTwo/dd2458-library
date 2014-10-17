@@ -7,16 +7,23 @@
 #include <vector>
 #include <algorithm>
 
-//Edge and node types
-struct edge_weight {
-  int weight;
-};
-struct edge_default {};
-struct node_default {};
-
 //Forward declaration of node
 template<typename E = edge_default, typename N = node_default>
 class Node;
+
+//Edge and node types
+struct edge_default {};
+struct node_default {};
+
+struct edge_weight {
+  int weight;
+};
+
+template<typename E>
+struct node_val_prev {
+  int value = std::numeric_limits<int>::max();
+  Node<E, node_val_prev>* previous = NULL;
+};
 
 //Class representing an edge in a graph
 template<typename E = edge_default, typename N = node_default>
@@ -43,7 +50,19 @@ public:
 	std::vector<Edge<E,N>*> edges;
   N extra;
   typedef E edge_type;
+  typedef N node_type;
 };
+
+//Help function to get path
+//Get the path stored in this node
+template<typename T>
+std::vector<T*> get_path(T* end) {
+  std::vector<T*> path;
+  for (T* v = end; v != NULL; v = v->extra.previous)
+    path.push_back(v);
+  std::reverse(path.begin(), path.end());
+  return path;
+}
 
 //Functor for sorting edges according to weight
 struct sort_edge_weight : public std::binary_function < Edge<edge_weight>*, Edge<edge_weight>*, bool > {
