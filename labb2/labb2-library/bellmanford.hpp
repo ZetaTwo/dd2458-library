@@ -3,8 +3,6 @@
 //          carlsven@kth.se
 #pragma once
 
-#include <vector>
-#include <queue>
 #include <limits>
 
 #include "graph.hpp"
