@@ -11,11 +11,6 @@ using namespace std;
 // Do we want to show the calculated path?
 // #define PRINT_PATH
 
-// SDL compatibility
-#ifdef _WIN32
-#define scanf scanf_s
-#endif
-
 int main() {
   //For each test case
 	while (true) {
