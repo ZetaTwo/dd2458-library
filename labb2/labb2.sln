@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb2-minspantree-runner", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb2-eulerianpath-runner", "labb2-eulerianpath-runner\labb2-eulerianpath-runner.vcxproj", "{D21FFD68-FDCC-476A-A435-51A4AC432B4E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb2-dijsktra2-runner", "labb2-dijsktra2-runner\labb2-dijsktra2-runner.vcxproj", "{214BEAE3-E932-4B76-84DA-4C24088ED5E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -33,6 +35,10 @@ Global
 		{D21FFD68-FDCC-476A-A435-51A4AC432B4E}.Debug|Win32.Build.0 = Debug|Win32
 		{D21FFD68-FDCC-476A-A435-51A4AC432B4E}.Release|Win32.ActiveCfg = Release|Win32
 		{D21FFD68-FDCC-476A-A435-51A4AC432B4E}.Release|Win32.Build.0 = Release|Win32
+		{214BEAE3-E932-4B76-84DA-4C24088ED5E3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{214BEAE3-E932-4B76-84DA-4C24088ED5E3}.Debug|Win32.Build.0 = Debug|Win32
+		{214BEAE3-E932-4B76-84DA-4C24088ED5E3}.Release|Win32.ActiveCfg = Release|Win32
+		{214BEAE3-E932-4B76-84DA-4C24088ED5E3}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

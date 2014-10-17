@@ -7,17 +7,12 @@
 #include <vector>
 #include <algorithm>
 
-//Edge types
+//Edge and node types
 struct edge_weight {
   int weight;
 };
-
-struct edge_default {
-};
-
-//Node types
-struct node_default {
-};
+struct edge_default {};
+struct node_default {};
 
 //Forward declaration of node
 template<typename E = edge_default, typename N = node_default>
@@ -40,8 +35,6 @@ class Node {
 public:
 	Node(int id) : id(id) {}
 
-  
-
   void add_edge(Edge<E, N>* edge) {
     edges.push_back(edge);
   }
@@ -49,9 +42,10 @@ public:
 	int id;
 	std::vector<Edge<E,N>*> edges;
   N extra;
-	
+  typedef E edge_type;
 };
 
+//Functor for sorting edges according to weight
 struct sort_edge_weight : public std::binary_function < Edge<edge_weight>*, Edge<edge_weight>*, bool > {
   bool operator()(const Edge<edge_weight> *x, const Edge<edge_weight> *y) const
   {
@@ -59,6 +53,7 @@ struct sort_edge_weight : public std::binary_function < Edge<edge_weight>*, Edge
   }
 };
 
+//Functor for sorting edges according to lexicographical order ( (0 1) < (0 2) < (1 2) )
 template<typename E, typename N>
 struct sort_edge_lexi : public std::binary_function < Edge<E, N>*, Edge<E, N>*, bool > {
   bool operator()(const Edge<E, N> *x, const Edge<E, N> *y) const
@@ -73,6 +68,7 @@ struct sort_edge_lexi : public std::binary_function < Edge<E, N>*, Edge<E, N>*, 
   }
 };
 
+//Class representing a graph of fixed size
 template<typename E = edge_default, typename N = node_default>
 class Graph {
 public:
