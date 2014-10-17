@@ -47,13 +47,13 @@ std::vector<std::vector<int> > floydwarshall(const FloydWarshallGraph& graph) {
             dist[k][j] == std::numeric_limits<int>::min()) {
             dist[i][j] = std::numeric_limits<int>::min();
 
-            //Standard case
+          //Standard case
           }
           else if (dist[i][j] > dist[i][k] + dist[k][j]) {
             dist[i][j] = dist[i][k] + dist[k][j];
           }
 
-          //Detect negative cycles
+          //Detect negative self-cycle
           if (i == j && dist[i][j] < 0) {
             dist[i][j] = std::numeric_limits<int>::min();
           }
