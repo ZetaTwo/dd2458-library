@@ -5,6 +5,7 @@
 // http://en.wikipedia.org/wiki/Eulerian_path#Hierholzer.27s_algorithm
 
 #include <iostream>
+#include <vector>
 using namespace std;
 
 #include "eulerianpath.hpp"
@@ -16,7 +17,7 @@ int main() {
       break;
     }
 
-    Graph<> graph(N);
+    EulerGraph graph(N);
     for (int m = 0; m < M; m++)
     {
       int u, v;
@@ -24,8 +25,17 @@ int main() {
       graph.add_edge(u, v);
     }
 
-
-
+    vector<size_t> result = eulerianpath(graph);
+    if (result.size() == 0) {
+      cout << "Impossible" << endl;
+    }
+    else {
+      for (auto e : result)
+      {
+        cout << e << " ";
+      }
+      cout << endl;
+    }
   }
 
   return 0;
