@@ -6,6 +6,10 @@
 #include <cassert>
 #include <cmath>
 #include <vector>
+#include <queue>
+#include <limits>
+#include <set>
+#include <algorithm>
 
 #include "graph.hpp"
 
@@ -33,117 +37,96 @@ int excess(MaxFlowNode* node, const size_t& start) {
   }
 }
 
-//TODO: Push back excess?
-bool push(MaxFlowEdge* edge, std::vector<std::vector<int> >& flow, const size_t& start) {
-  //Assertions
-  if (!(excess(edge->left, start) > 0 && edge->left->extra.height == edge->right->extra.height + 1)) { return false; }
+bool bfs(const std::vector<std::vector<int> >& rGraph, int s, int t, std::vector<int>& parent, const vector<set<int>>&edges)
+{
+  const size_t& V = rGraph.size();
+  // Create a visited array and mark all vertices as not visited
+  std::vector<bool> visited(V, false);
 
-  //Calculate push
-  int delta = std::min(excess(edge->left, start), edge->extra.capacity - flow[edge->left->id][edge->right->id]);
-  if (delta == 0) {
-    return false;
-  }
+  // Create a queue, enqueue source vertex and mark source vertex
+  // as visited
+  std::queue<int> q;
+  q.push(s);
+  visited[s] = true;
+  parent[s] = -1;
 
-  flow[edge->left->id][edge->right->id] += delta;
-  flow[edge->right->id][edge->left->id] -= delta;
+  // Standard BFS Loop
+  while (!q.empty())
+  {
+    int u = q.front();
+    q.pop();
 
-  //Subtract/add unless source which is inf
-  if (edge->left->id != start) {
-    edge->left->extra.excess -= delta;
-  } 
-  if (edge->right->id != start) {
-    edge->right->extra.excess += delta;
-  }
-
-  return true;
-}
-
-bool relabel(MaxFlowNode* node, std::vector<std::vector<int> >& flow, const size_t& start, const size_t& end) {
-  //Assertions
-  if (node->id == start || node->id == end) { return false; }
-  if (!(excess(node, start) > 0)) { return false; };
-  for (auto e : node->edges) {
-    if (e->left == node && flow[e->left->id][e->right->id] < e->extra.capacity) {
-      if (!(e->left->extra.height <= e->right->extra.height)) {
-        return false;
+    //for (int v = 0; v < V; v++)
+    for (auto v : edges[u])
+    {
+      if (visited[v] == false && rGraph[u][v] > 0)
+      {
+        q.push(v);
+        parent[v] = u;
+        visited[v] = true;
       }
     }
   }
 
-  //Calculate new label
-  int min_height = std::numeric_limits<int>::max();
-  for (auto e : node->edges)
-  {
-    if (e->left == node && flow[e->left->id][e->right->id] < e->extra.capacity && e->right->extra.height < min_height) {
-      min_height = e->right->extra.height;
-    }
-  }
-  if (min_height == std::numeric_limits<int>::max()) {
-    return false;
-  }
-
-  node->extra.height = min_height + 1;
-
-  return true;
+  // If we reached sink in BFS starting from source, then return
+  // true, else false
+  return (visited[t] == true);
 }
 
-int maxflow(MaxFlowGraph& graph, const size_t& source, const size_t& sink, std::vector<MaxFlowEdge*>& flow_graph) {
-  //flow table
-  std::vector<std::vector<int> > flow(graph.getSize(), std::vector<int>(graph.getSize(), 0));
+// Returns the maximum flow from s to t in the given graph
+int fordFulkerson(const std::vector<std::vector<int> >& graph, int s, int t, std::vector<std::vector<int> >& flowGraph, const vector<set<int>>&edges)
+{
+  const size_t& V = graph.size();
+  int u, v;
 
-  //create a preflow f that saturates all out-edges of s
-  for (auto& e : graph.getNodes()[source]->edges)
+  // Create a residual graph and fill the residual graph with
+  // given capacities in the original graph as residual capacities
+  // in residual graph
+  std::vector<std::vector<int> > rGraph(V, std::vector<int>(V)); // Residual graph where rGraph[i][j] indicates 
+  // residual capacity of edge from i to j (if there
+  // is an edge. If rGraph[i][j] is 0, then there is not)  
+  for (u = 0; u < V; u++)
+    for (v = 0; v < V; v++)
+      rGraph[u][v] = graph[u][v];
+
+  std::vector<int> parent(V);  // This array is filled by BFS and to store path
+
+  int max_flow = 0;  // There is no flow initially
+
+  // Augment the flow while there is path from source to sink
+  while (bfs(rGraph, s, t, parent, edges))
   {
-    if (e->left == graph.getNodes()[source]) {
-      flow[e->left->id][e->right->id] += e->extra.capacity;
-      e->right->extra.excess += e->extra.capacity;
+    // Find minimum residual capacity of the edges along the
+    // path filled by BFS. Or we can say find the maximum flow
+    // through the path found.
+    int path_flow = std::numeric_limits<int>::max();
+    for (v = t; v != s; v = parent[v])
+    {
+      u = parent[v];
+      path_flow = std::min(path_flow, rGraph[u][v]);
     }
-  }
-  MaxFlowNode* source_node = graph.getNodes()[source];
-  for (auto& e : source_node->edges)
-  {
-    push(e, flow, source);
+
+    // update residual capacities of the edges and reverse edges
+    // along the path
+    for (v = t; v != s; v = parent[v])
+    {
+      u = parent[v];
+      rGraph[u][v] -= path_flow;
+      rGraph[v][u] += path_flow;
+    }
+
+    // Add path flow to overall flow
+    max_flow += path_flow;
   }
 
-  //let h[u] = 0 foreach v in graph
-  for (auto& v : graph.getNodes())
-  {
-    v->extra.height = 0;
-  }
-
-  graph.getNodes()[source]->extra.height = graph.getSize();
-  graph.getNodes()[sink]->extra.height = 0;
+  //Construct flow
   
-  bool did_work = false;
-  do {
-    did_work = false;
-    for (auto& v : graph.getNodes())
-    {
-      if (relabel(v, flow, source, sink)) {
-        did_work = true;
-      }
-    }
-    for (auto& e : graph.getEdges())
-    {
-      if (push(e, flow, source)) {
-        did_work = true;
-      }
-    }
-
-  } while (did_work);
-
-  //Create resulting graph with flows
-  int sum = 0;
-  for (auto& e : graph.getEdges())
-  {
-    e->extra.flow = flow[e->left->id][e->right->id];
-    if (e->right->id == sink) {
-      sum += e->extra.flow;
-    }
-    if (e->extra.flow > 0) {
-      flow_graph.push_back(e);
+  for (int i = 0; i < V; i++) {
+    for (int j = 0; j < V; j++) {
+      flowGraph[i][j] = std::max(graph[i][j] - rGraph[i][j], 0);
     }
   }
 
-  return sum;
+  // Return the overall flow
+  return max_flow;
 }
