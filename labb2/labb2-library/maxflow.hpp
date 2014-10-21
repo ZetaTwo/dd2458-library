@@ -5,6 +5,7 @@
 
 #include <cassert>
 #include <cmath>
+#include <vector>
 
 #include "graph.hpp"
 
@@ -57,8 +58,9 @@ bool push(MaxFlowEdge* edge, std::vector<std::vector<int> >& flow, const size_t&
   return true;
 }
 
-bool relabel(MaxFlowNode* node, std::vector<std::vector<int> >& flow, const size_t& start) {
+bool relabel(MaxFlowNode* node, std::vector<std::vector<int> >& flow, const size_t& start, const size_t& end) {
   //Assertions
+  if (node->id == start || node->id == end) { return false; }
   if (!(excess(node, start) > 0)) { return false; };
   for (auto e : node->edges) {
     if (e->left == node && flow[e->left->id][e->right->id] < e->extra.capacity) {
@@ -85,44 +87,45 @@ bool relabel(MaxFlowNode* node, std::vector<std::vector<int> >& flow, const size
   return true;
 }
 
-int maxflow(MaxFlowGraph& graph, const size_t& source, const size_t& sink, vector<MaxFlowEdge*>& flow_graph) {
+int maxflow(MaxFlowGraph& graph, const size_t& source, const size_t& sink, std::vector<MaxFlowEdge*>& flow_graph) {
   //flow table
-  std::vector<std::vector<int> > flow(graph.getSize(), vector<int>(graph.getSize(), 0));
+  std::vector<std::vector<int> > flow(graph.getSize(), std::vector<int>(graph.getSize(), 0));
 
   //create a preflow f that saturates all out-edges of s
-  /*for (auto v : graph.getNodes())
+  for (auto& e : graph.getNodes()[source]->edges)
   {
-    for (auto e : v->edges)
-    {
-      if (e->right == v) {
-        v->extra.excess += e->extra.capacity;
-      }
+    if (e->left == graph.getNodes()[source]) {
+      flow[e->left->id][e->right->id] += e->extra.capacity;
+      e->right->extra.excess += e->extra.capacity;
     }
-  }*/
+  }
   MaxFlowNode* source_node = graph.getNodes()[source];
-  for (auto e : source_node->edges)
+  for (auto& e : source_node->edges)
   {
     push(e, flow, source);
   }
 
   //let h[u] = 0 foreach v in graph
-  for (auto v : graph.getNodes())
+  for (auto& v : graph.getNodes())
   {
     v->extra.height = 0;
   }
 
+  graph.getNodes()[source]->extra.height = graph.getSize();
+  graph.getNodes()[sink]->extra.height = 0;
+  
   bool did_work = false;
   do {
     did_work = false;
-    for (auto v : graph.getNodes())
+    for (auto& v : graph.getNodes())
     {
-      if (relabel(v, flow, source)) {
+      if (relabel(v, flow, source, sink)) {
         did_work = true;
       }
     }
-    for (auto e : graph.getEdges())
+    for (auto& e : graph.getEdges())
     {
-      if (excess(e->left, source) > 0 && push(e, flow, source)) {
+      if (push(e, flow, source)) {
         did_work = true;
       }
     }
@@ -131,7 +134,7 @@ int maxflow(MaxFlowGraph& graph, const size_t& source, const size_t& sink, vecto
 
   //Create resulting graph with flows
   int sum = 0;
-  for (auto e : graph.getEdges())
+  for (auto& e : graph.getEdges())
   {
     e->extra.flow = flow[e->left->id][e->right->id];
     if (e->right->id == sink) {
