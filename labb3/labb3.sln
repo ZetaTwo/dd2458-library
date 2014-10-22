@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb3-tests", "labb3-tests\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb3-rationalarithmetic-runner", "labb3-rationalarithmetic-runner\labb3-rationalarithmetic-runner.vcxproj", "{7A250518-CBE7-4E16-9191-2B267B8AF1D0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb3-modulararithmetic-runner", "labb3-modulararithmetic-runner\labb3-modulararithmetic-runner.vcxproj", "{CD3608D0-9CC0-46A2-B319-B6A8056E47B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -27,6 +29,10 @@ Global
 		{7A250518-CBE7-4E16-9191-2B267B8AF1D0}.Debug|Win32.Build.0 = Debug|Win32
 		{7A250518-CBE7-4E16-9191-2B267B8AF1D0}.Release|Win32.ActiveCfg = Release|Win32
 		{7A250518-CBE7-4E16-9191-2B267B8AF1D0}.Release|Win32.Build.0 = Release|Win32
+		{CD3608D0-9CC0-46A2-B319-B6A8056E47B2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CD3608D0-9CC0-46A2-B319-B6A8056E47B2}.Debug|Win32.Build.0 = Debug|Win32
+		{CD3608D0-9CC0-46A2-B319-B6A8056E47B2}.Release|Win32.ActiveCfg = Release|Win32
+		{CD3608D0-9CC0-46A2-B319-B6A8056E47B2}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

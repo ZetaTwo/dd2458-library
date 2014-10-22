@@ -21,5 +21,8 @@
     <ClInclude Include="math.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="modular.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

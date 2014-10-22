@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math.hpp" />
+    <ClInclude Include="modular.hpp" />
     <ClInclude Include="rational.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
