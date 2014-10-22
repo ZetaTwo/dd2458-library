@@ -1,3 +1,7 @@
+// KTH DD2458 popuph14
+// authors: magolsso@kth.se
+//          carlsven@kth.se
+
 #include <iostream>
 using namespace std;
 

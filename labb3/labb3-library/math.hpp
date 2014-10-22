@@ -1,3 +1,7 @@
+// KTH DD2458 popuph14
+// authors: magolsso@kth.se
+//          carlsven@kth.se
+#pragma once
 
 //Calculates GCD(a, b)
 template<typename T>
@@ -19,6 +23,7 @@ T lcm(T a, T b) {
   return (a / g) * b;
 }
 
+//Stores result of an extended Euclidean algorithm calculation
 template<typename T>
 struct egcd_res {
   T coeff_a;
@@ -28,7 +33,7 @@ struct egcd_res {
   T quotient_b;
 };
 
-//Extended Euclidian algorithm
+//Extended Euclidean algorithm
 template<typename T>
 egcd_res<T> egcd(T a, T b) {
   egcd_res<T> res = { 1, 0, a, 1, 0 };

@@ -1,5 +1,12 @@
+// KTH DD2458 popuph14
+// authors: magolsso@kth.se
+//          carlsven@kth.se
+#pragma once
+
 #include <algorithm>
 #include <ostream>
+#include <bitset>
+#include <limits>
 
 #include "math.hpp"
 
@@ -35,6 +42,10 @@ public:
       throw std::invalid_argument("Operands must have same modulo");
     }
 
+    if (divisor.value == 0) {
+      throw std::invalid_argument("Division by zero");
+    }
+
     T inv = inverse(divisor.value, mod);
     if (inv == mod) {
       throw std::invalid_argument("Right operand has no inverse");
@@ -67,23 +78,23 @@ public:
       throw std::invalid_argument("Operands must have same modulo");
     }
 
-    if (value == 0 || other == 0) {
+    if (value == 0 || other.value == 0) {
       value = 0;
       return *this;
     }
 
-    T q = mod / value;
-    T r = mod % value;
-
-    T p1 = value * (other.value % q);
-    T p2 = r * (other.value / q);
-
-    if (p1 > p2) {
-      value = p1 - p2;
+    // Based on: http://en.wikipedia.org/wiki/Kochanski_multiplication
+    std::bitset<sizeof(T)*std::numeric_limits<unsigned char>::digits> mult(other.value);
+    T res = 0;
+    for (size_t i = mult.size(); i--;) {
+      res <<= 1;
+      res %= mod;
+      if (mult.test(i)) {
+        res += value;
+      }
+      res %= mod;
     }
-    else {
-      value = mod - (p2 - p1);
-    }
+    value = res;
 
     return *this;
   }
