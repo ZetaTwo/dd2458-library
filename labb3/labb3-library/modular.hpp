@@ -13,7 +13,7 @@
 template<typename T>
 class modulo {
 public:
-  modulo(T value, T mod) : value(value % mod), mod(mod) {
+  modulo(T val, T mod) : value(val % mod), mod(mod) {
     if (value < 0) { value += mod; }
   }
   modulo(const modulo& other) : value(other.value % other.mod), mod(other.mod) {
@@ -122,15 +122,7 @@ public:
       throw std::invalid_argument("Operands must have same modulo");
     }
 
-    T larger = std::max(value, other.value);
-    T smaller = std::min(value, other.value);
-    T left = mod - larger;
-    if (smaller < left) {
-      value = smaller + larger;
-    }
-    else {
-      value = smaller - left;
-    }
+    *this -= (mod - other.value);
 
     return *this;
   }
@@ -157,7 +149,7 @@ public:
       throw std::invalid_argument("Operands must have same modulo");
     }
 
-    if (other.value < value) {
+    if (other.value <= value) {
       value -= other.value;
     }
     else {
