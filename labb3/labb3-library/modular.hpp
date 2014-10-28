@@ -5,8 +5,6 @@
 
 #include <algorithm>
 #include <ostream>
-#include <bitset>
-#include <limits>
 
 #include "math.hpp"
 
@@ -83,18 +81,7 @@ public:
       return *this;
     }
 
-    // Based on: http://en.wikipedia.org/wiki/Kochanski_multiplication
-    std::bitset<sizeof(T)*std::numeric_limits<unsigned char>::digits> mult(other.value);
-    T res = 0;
-    for (size_t i = mult.size(); i--;) {
-      res <<= 1;
-      res %= mod;
-      if (mult.test(i)) {
-        res += value;
-      }
-      res %= mod;
-    }
-    value = res;
+    value = mulmod(value, other.value, mod);
 
     return *this;
   }
@@ -188,6 +175,10 @@ public:
 
   friend std::ostream& operator<<(std::ostream& stream, const modulo<T>& value) {
     return stream << value.value;
+  }
+
+  T lift() const {
+    return value;
   }
 
 private:

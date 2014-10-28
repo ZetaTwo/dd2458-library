@@ -3,6 +3,10 @@
 //          carlsven@kth.se
 #pragma once
 
+#include <vector>
+#include <bitset>
+#include <limits>
+
 //Calculates GCD(a, b)
 template<typename T>
 T gcd(T a, T b) {
@@ -93,4 +97,39 @@ T inverse(T a, T n) {
   }
   return t;
 
+}
+
+template<typename T>
+T mulmod(T a, T b, T mod) {
+  // Based on: http://en.wikipedia.org/wiki/Kochanski_multiplication
+  std::bitset<sizeof(T)*std::numeric_limits<unsigned char>::digits> mult(b);
+  T res = 0;
+  for (size_t i = mult.size(); i--;) {
+    res <<= 1;
+    res %= mod;
+    if (mult.test(i)) {
+      res += a;
+    }
+    res %= mod;
+  }
+  return res;
+}
+
+template<typename T>
+T chineseremainder(const std::vector<T>& remainders, const std::vector<T>& moduli) {
+  T N = 1;
+  for (auto& v : moduli) N *= v;
+
+  T x = 0;
+  for (auto ai = remainders.begin(), ni = moduli.begin(); ai != remainders.end() && ni != moduli.end(); ai++, ni++)
+  {
+    if (*ai > 0) {
+      T Nni = N / (*ni);
+      T term = mulmod(*ai, Nni, N);
+      term = mulmod(term, inverse(Nni, *ni), N);
+      x += term;
+    }
+  }
+
+  return x % N;
 }

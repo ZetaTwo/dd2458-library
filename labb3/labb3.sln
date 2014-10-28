@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb3-modulararithmetic-run
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb3-primesieve-runner", "labb3-primesieve-runner\labb3-primesieve-runner.vcxproj", "{C2BE2EB1-43F6-45F9-863F-71BBAC9B5DD2}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb3-chineseremainder-runner", "labb3-chineseremainder-runner\labb3-chineseremainder-runner.vcxproj", "{FDACC3A6-67FD-488D-8365-1273B20C59C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -39,6 +41,10 @@ Global
 		{C2BE2EB1-43F6-45F9-863F-71BBAC9B5DD2}.Debug|Win32.Build.0 = Debug|Win32
 		{C2BE2EB1-43F6-45F9-863F-71BBAC9B5DD2}.Release|Win32.ActiveCfg = Release|Win32
 		{C2BE2EB1-43F6-45F9-863F-71BBAC9B5DD2}.Release|Win32.Build.0 = Release|Win32
+		{FDACC3A6-67FD-488D-8365-1273B20C59C9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FDACC3A6-67FD-488D-8365-1273B20C59C9}.Debug|Win32.Build.0 = Debug|Win32
+		{FDACC3A6-67FD-488D-8365-1273B20C59C9}.Release|Win32.ActiveCfg = Release|Win32
+		{FDACC3A6-67FD-488D-8365-1273B20C59C9}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
