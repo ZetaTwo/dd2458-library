@@ -115,6 +115,7 @@ T inverse(T a, T n) {
 
 }
 
+//Multiplies two numbers a and b reduced by a modulo avoiding overflow.
 template<typename T>
 T mulmod(T a, T b, T mod) {
   // Based on: http://en.wikipedia.org/wiki/Kochanski_multiplication
@@ -131,11 +132,7 @@ T mulmod(T a, T b, T mod) {
   return res;
 }
 
-template<typename T>
-T chineseremainder(const T& a, const T& m, const T& b, const T& n) {
-  return chineseremainder(std::vector<T>({ a, b }), std::vector<T>({ m, n }));
-}
-
+//Solves a system of congruences x = a_i (mod m_i)
 template<typename T>
 T chineseremainder(const std::vector<T>& remainders, const std::vector<T>& moduli) {
   T N = 1;
@@ -155,11 +152,18 @@ T chineseremainder(const std::vector<T>& remainders, const std::vector<T>& modul
   return x % N;
 }
 
+//Shorthand for solving a congruence when N=2
+template<typename T>
+T chineseremainder(const T& a, const T& m, const T& b, const T& n) {
+  return chineseremainder(std::vector<T>({ a, b }), std::vector<T>({ m, n }));
+}
+
 template<typename T>
 T generalchineseremainder(std::vector<T> remainders, std::vector<T> moduli) {
   T max_mod = *max_element(moduli.begin(), moduli.end());
   primesieve<T> primes(static_cast<T>(ceil(sqrt(max_mod))));
 
+  //TODO: This check only works for N=2
   if (abs((remainders[1] - remainders[0]) % gcd(moduli[1], moduli[0])) != 0) {
     return -1;
   }
