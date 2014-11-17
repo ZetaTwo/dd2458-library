@@ -199,6 +199,7 @@ T generalchineseremainder(std::vector<T> remainders, std::vector<T> moduli) {
     }
   }
 
+  //Add remaining prime moduli
   for (size_t i = 0; i < moduli.size(); i++) {
     if (moduli[i] != 1) {
       system[moduli[i]] = remainders[i];
