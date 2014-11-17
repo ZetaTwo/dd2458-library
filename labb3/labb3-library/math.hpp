@@ -158,6 +158,7 @@ T chineseremainder(const T& a, const T& m, const T& b, const T& n) {
   return chineseremainder(std::vector<T>({ a, b }), std::vector<T>({ m, n }));
 }
 
+//Solves a system of congruences x = a_i (mod m_i) even when m_i are not pairwise-coprime.
 template<typename T>
 T generalchineseremainder(std::vector<T> remainders, std::vector<T> moduli) {
   T max_mod = *max_element(moduli.begin(), moduli.end());
