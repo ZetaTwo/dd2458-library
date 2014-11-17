@@ -4,28 +4,33 @@
 #pragma once
 
 #include <vector>
-#include <cmath>
 
 template<typename T>
 class primesieve {
 public:
-  primesieve(size_t N) : primes(N, true), num_primes(N) {
+  primesieve(size_t N) : primesstatus(N, true), num_primes(N) {
     // 1 is not prime
-    primes[0] = false;
+    primesstatus[0] = false;
     num_primes--;
 
     //Start from 2, the first prime number
     for (size_t i = 2; i <= N; i++)
     {
       //If current number is prime, tick all multiples of it
-      if (primes[i-1]) {
+      if (primesstatus[i - 1]) {
         for (size_t j = i*i; j <= N; j += i) {
           //If this was previously considered prime, decrease counter by 1
-          if (primes[j-1]) {
+          if (primesstatus[j - 1]) {
             num_primes--;
           }
-          primes[j-1] = false;
+          primesstatus[j - 1] = false;
         }
+      }
+    }
+
+    for (size_t i = 0; i < primesstatus.size(); i++) {
+      if (primesstatus[i]) {
+        primes.push_back(i + 1);
       }
     }
   }
@@ -35,10 +40,15 @@ public:
   }
 
   bool isprime(size_t i) const {
-    return primes[i];
+    return primesstatus[i];
+  }
+
+  const std::vector<T>& getPrimes() const {
+    return primes;
   }
 
 private:
-  std::vector<bool> primes;
+  std::vector<bool> primesstatus;
+  std::vector<T> primes;
   size_t num_primes;
 };

@@ -6,6 +6,10 @@
 #include <vector>
 #include <bitset>
 #include <limits>
+#include <map>
+#include <algorithm>
+
+#include "primesieve.hpp"
 
 //Calculates GCD(a, b)
 template<typename T>
@@ -18,6 +22,18 @@ T gcd(T a, T b) {
   }
 
   return a;
+}
+
+//Calculates GCD(a1, a2, a3, ...)
+template<typename T>
+T gcd(const std::vector<T>& numbers) {
+  auto n = numbers.begin();
+  T res = *n++;
+  while (n != numbers.end()) {
+    res = gcd(res, *n++);
+  }
+  
+  return res;
 }
 
 //Calculates LCM(a, b)
@@ -116,6 +132,11 @@ T mulmod(T a, T b, T mod) {
 }
 
 template<typename T>
+T chineseremainder(const T& a, const T& m, const T& b, const T& n) {
+  return chineseremainder(std::vector<T>({ a, b }), std::vector<T>({ m, n }));
+}
+
+template<typename T>
 T chineseremainder(const std::vector<T>& remainders, const std::vector<T>& moduli) {
   T N = 1;
   for (auto& v : moduli) N *= v;
@@ -132,4 +153,80 @@ T chineseremainder(const std::vector<T>& remainders, const std::vector<T>& modul
   }
 
   return x % N;
+}
+
+template<typename T>
+T generalchineseremainder(std::vector<T> remainders, std::vector<T> moduli) {
+  T max_mod = *max_element(moduli.begin(), moduli.end());
+  primesieve<T> primes(static_cast<T>(ceil(sqrt(max_mod))));
+
+  if (abs((remainders[1] - remainders[0]) % gcd(moduli[1], moduli[0])) != 0) {
+    return -1;
+  }
+
+  //Base case
+  if (gcd(moduli) == 1) {
+    return chineseremainder(remainders, moduli);
+  }
+
+  //Find prime divisor
+  std::map<T, T> system;
+  for (auto prime : primes.getPrimes()) {
+
+    //Break up into parts
+    for (size_t i = 0; i < remainders.size(); i++) {
+      //Calculate largest prime exponent
+      T pexp = prime;
+      while (moduli[i] % pexp == 0) { pexp *= prime; }
+      pexp /= prime;
+      if (pexp == 1) continue;
+
+      //Add split
+      const T& m = pexp;
+      const T& a = remainders[i] % m;
+      auto entry = system.find(m);
+      if (entry != system.end() && entry->second != a) {
+        return -1;
+      }
+      else {
+        system[m] = a;
+      }
+      moduli[i] /= pexp;
+    }
+  }
+
+  for (size_t i = 0; i < moduli.size(); i++) {
+    if (moduli[i] != 1) {
+      system[moduli[i]] = remainders[i];
+    }
+  }
+
+  //Convert map to vectors
+  std::vector<T> remainders2, moduli2;
+  for (auto pair : system) {
+    moduli2.push_back(pair.first);
+    remainders2.push_back(pair.second);
+  }
+
+  //Clean
+  for (size_t i = 0; i < moduli2.size(); i++) {
+    for (size_t j = 0; j < moduli2.size();) {
+      if (i != j && moduli2[j] % moduli2[i] == 0) {
+        moduli2.erase(moduli2.begin() + i);
+        remainders2.erase(remainders2.begin() + i);
+      }
+      else {
+        j++;
+      }
+    }
+  }
+
+
+  //Calculate
+  if (remainders2.size() == 1) {
+    return remainders2[0];
+  }
+  else {
+    return generalchineseremainder(remainders2, moduli2);
+  }
 }

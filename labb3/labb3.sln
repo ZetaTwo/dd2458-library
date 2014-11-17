@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb3-library", "labb3-library\labb3-library.vcxproj", "{9C6712E1-A6FD-4B0F-869C-60F3FCF0394D}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb3-primesieve-runner", "labb3-primesieve-runner\labb3-primesieve-runner.vcxproj", "{C2BE2EB1-43F6-45F9-863F-71BBAC9B5DD2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb3-chineseremainder-runner", "labb3-chineseremainder-runner\labb3-chineseremainder-runner.vcxproj", "{FDACC3A6-67FD-488D-8365-1273B20C59C9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb3-generalchineseremainder-runner", "labb3-generalchineseremainder-runner\labb3-generalchineseremainder-runner.vcxproj", "{EB61ADEE-595C-4E41-917B-C66EEB7D45DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{FDACC3A6-67FD-488D-8365-1273B20C59C9}.Debug|Win32.Build.0 = Debug|Win32
 		{FDACC3A6-67FD-488D-8365-1273B20C59C9}.Release|Win32.ActiveCfg = Release|Win32
 		{FDACC3A6-67FD-488D-8365-1273B20C59C9}.Release|Win32.Build.0 = Release|Win32
+		{EB61ADEE-595C-4E41-917B-C66EEB7D45DE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EB61ADEE-595C-4E41-917B-C66EEB7D45DE}.Debug|Win32.Build.0 = Debug|Win32
+		{EB61ADEE-595C-4E41-917B-C66EEB7D45DE}.Release|Win32.ActiveCfg = Release|Win32
+		{EB61ADEE-595C-4E41-917B-C66EEB7D45DE}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
