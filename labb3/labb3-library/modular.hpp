@@ -5,15 +5,13 @@
 
 #include <algorithm>
 #include <ostream>
-#include <bitset>
-#include <limits>
 
 #include "math.hpp"
 
 template<typename T>
 class modulo {
 public:
-  modulo(T value, T mod) : value(value % mod), mod(mod) {
+  modulo(T val, T mod) : value(val % mod), mod(mod) {
     if (value < 0) { value += mod; }
   }
   modulo(const modulo& other) : value(other.value % other.mod), mod(other.mod) {
@@ -83,18 +81,7 @@ public:
       return *this;
     }
 
-    // Based on: http://en.wikipedia.org/wiki/Kochanski_multiplication
-    std::bitset<sizeof(T)*std::numeric_limits<unsigned char>::digits> mult(other.value);
-    T res = 0;
-    for (size_t i = mult.size(); i--;) {
-      res <<= 1;
-      res %= mod;
-      if (mult.test(i)) {
-        res += value;
-      }
-      res %= mod;
-    }
-    value = res;
+    value = mulmod(value, other.value, mod);
 
     return *this;
   }
@@ -122,15 +109,7 @@ public:
       throw std::invalid_argument("Operands must have same modulo");
     }
 
-    T larger = std::max(value, other.value);
-    T smaller = std::min(value, other.value);
-    T left = mod - larger;
-    if (smaller < left) {
-      value = smaller + larger;
-    }
-    else {
-      value = smaller - left;
-    }
+    *this -= (mod - other.value);
 
     return *this;
   }
@@ -157,7 +136,7 @@ public:
       throw std::invalid_argument("Operands must have same modulo");
     }
 
-    if (other.value < value) {
+    if (other.value <= value) {
       value -= other.value;
     }
     else {
@@ -196,6 +175,10 @@ public:
 
   friend std::ostream& operator<<(std::ostream& stream, const modulo<T>& value) {
     return stream << value.value;
+  }
+
+  T lift() const {
+    return value;
   }
 
 private:

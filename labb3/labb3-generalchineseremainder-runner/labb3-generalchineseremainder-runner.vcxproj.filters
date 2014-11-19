@@ -15,17 +15,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="rational.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="math.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="modular.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="primesieve.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClCompile Include="generalchineseremainder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
