@@ -176,7 +176,7 @@ T chineseremainder(const T& a, const T& m, const T& b, const T& n) {
 template<typename T>
 T generalchineseremainder(std::vector<T> remainders, std::vector<T> moduli) {
   if (remainders.size() != moduli.size()) {
-    throw std::invalid_argument("Size of remainders and moduli must be eual");
+    throw std::invalid_argument("Size of remainders and moduli must be equal");
   }
 
   if (remainders.size() == 0) {
