@@ -3,13 +3,12 @@
 //          carlsven@kth.se
 #pragma once
 
+#include <stdexcept>
 #include <vector>
 #include <bitset>
 #include <limits>
 #include <map>
 #include <algorithm>
-
-#include "primesieve.hpp"
 
 //Calculates GCD(a, b)
 template<typename T>
@@ -132,6 +131,21 @@ T mulmod(T a, T b, T mod) {
   return res;
 }
 
+//Calculates base^exponent (mod modulus)
+template<typename T>
+T pow_mod(T base, T exponent, T modulus)
+{
+  T result = 1;
+  while (exponent > 0)
+  {
+    if (exponent % 2 == 1)
+      result = (result * base) % modulus;
+    exponent = exponent >> 1;
+    base = (base * base) % modulus;
+  }
+  return result;
+}
+
 //Solves a system of congruences x = a_i (mod m_i)
 template<typename T>
 T chineseremainder(const std::vector<T>& remainders, const std::vector<T>& moduli) {
@@ -161,78 +175,62 @@ T chineseremainder(const T& a, const T& m, const T& b, const T& n) {
 //Solves a system of congruences x = a_i (mod m_i) even when m_i are not pairwise-coprime.
 template<typename T>
 T generalchineseremainder(std::vector<T> remainders, std::vector<T> moduli) {
-  T max_mod = *max_element(moduli.begin(), moduli.end());
-  primesieve<T> primes(static_cast<T>(ceil(sqrt(max_mod))));
-
-  //TODO: This check only works for N=2
-  if (abs((remainders[1] - remainders[0]) % gcd(moduli[1], moduli[0])) != 0) {
-    return -1;
+  if (remainders.size() != moduli.size()) {
+    throw std::invalid_argument("Size of remainders and moduli must be eual");
   }
 
-  //Base case
-  if (gcd(moduli) == 1) {
-    return chineseremainder(remainders, moduli);
+  if (remainders.size() == 0) {
+    return 0;
   }
 
-  //Find prime divisor
-  std::map<T, T> system;
-  for (auto prime : primes.getPrimes()) {
+  if (remainders.size() == 1) {
+    return remainders[0];
+  }
 
-    //Break up into parts
-    for (size_t i = 0; i < remainders.size(); i++) {
-      //Calculate largest prime exponent
-      T pexp = prime;
-      while (moduli[i] % pexp == 0) { pexp *= prime; }
-      pexp /= prime;
-      if (pexp == 1) continue;
-
-      //Add split
-      const T& m = pexp;
-      const T& a = remainders[i] % m;
-      auto entry = system.find(m);
-      if (entry != system.end() && entry->second != a) {
-        return -1;
-      }
-      else {
-        system[m] = a;
-      }
-      moduli[i] /= pexp;
+  if (moduli[0] != moduli[1]) {
+    //Method of successive substitution
+    //http://en.wikipedia.org/wiki/Method_of_successive_substitution
+    if (remainders[1] > remainders[0]) {
+      std::swap(remainders[0], remainders[1]);
+      std::swap(moduli[0], moduli[1]);
     }
-  }
 
-  //Add remaining prime moduli
-  for (size_t i = 0; i < moduli.size(); i++) {
-    if (moduli[i] != 1) {
-      system[moduli[i]] = remainders[i];
+    T left = moduli[1];
+    T right = (remainders[0] - remainders[1]) % moduli[0];
+    T mod = moduli[0];
+
+    T g = gcd(left, gcd(right, mod));
+    left /= g;
+    right /= g;
+    mod /= g;
+
+    T inv = inverse(left, mod);
+    if (inv == mod) {
+      return -1;
     }
-  }
 
-  //Convert map to vectors
-  std::vector<T> remainders2, moduli2;
-  for (auto pair : system) {
-    moduli2.push_back(pair.first);
-    remainders2.push_back(pair.second);
-  }
+    left = (left * inv) % mod;
+    right = (right * inv) % mod;
 
-  //Clean
-  for (size_t i = 0; i < moduli2.size(); i++) {
-    for (size_t j = 0; j < moduli2.size();) {
-      if (i != j && moduli2[j] % moduli2[i] == 0) {
-        moduli2.erase(moduli2.begin() + i);
-        remainders2.erase(remainders2.begin() + i);
-      }
-      else {
-        j++;
-      }
-    }
-  }
+    T pair_rem = remainders[1] + moduli[1] * right;
+    T pair_mod = moduli[1] * mod;
 
-
-  //Calculate
-  if (remainders2.size() == 1) {
-    return remainders2[0];
+    remainders.push_back(pair_rem);
+    moduli.push_back(pair_mod);
   }
   else {
-    return generalchineseremainder(remainders2, moduli2);
+    if (remainders[0] != remainders[1]) {
+      return -1;
+    }
+    else {
+      remainders.push_back(remainders[0]);
+      moduli.push_back(moduli[0]);
+    }
   }
+
+  remainders.erase(remainders.begin(), remainders.begin() + 2);
+  moduli.erase(moduli.begin(), moduli.begin() + 2);
+
+  return generalchineseremainder(remainders, moduli);
+  
 }
