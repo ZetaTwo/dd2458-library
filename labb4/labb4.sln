@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb4-library", "labb4-library\labb4-library.vcxproj", "{1F0454E7-BB5E-4E1B-B727-6146B8FC77FC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb4-tests", "labb4-tests\labb4-tests.vcxproj", "{A60E6522-8949-4BE8-901C-0CAC19E65C42}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb4-polygonarea-runner", "labb4-polygonarea-runner\labb4-polygonarea-runner.vcxproj", "{5B68C099-48D9-4E42-9896-94BF468CDBE7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1F0454E7-BB5E-4E1B-B727-6146B8FC77FC} = {1F0454E7-BB5E-4E1B-B727-6146B8FC77FC}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb4-pointinpolygon-runner", "labb4-pointinpolygon-runner\labb4-pointinpolygon-runner.vcxproj", "{EF0F2696-2591-406C-A6C9-C06294BD062C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1F0454E7-BB5E-4E1B-B727-6146B8FC77FC} = {1F0454E7-BB5E-4E1B-B727-6146B8FC77FC}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1F0454E7-BB5E-4E1B-B727-6146B8FC77FC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1F0454E7-BB5E-4E1B-B727-6146B8FC77FC}.Debug|Win32.Build.0 = Debug|Win32
+		{1F0454E7-BB5E-4E1B-B727-6146B8FC77FC}.Release|Win32.ActiveCfg = Release|Win32
+		{1F0454E7-BB5E-4E1B-B727-6146B8FC77FC}.Release|Win32.Build.0 = Release|Win32
+		{A60E6522-8949-4BE8-901C-0CAC19E65C42}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A60E6522-8949-4BE8-901C-0CAC19E65C42}.Debug|Win32.Build.0 = Debug|Win32
+		{A60E6522-8949-4BE8-901C-0CAC19E65C42}.Release|Win32.ActiveCfg = Release|Win32
+		{A60E6522-8949-4BE8-901C-0CAC19E65C42}.Release|Win32.Build.0 = Release|Win32
+		{5B68C099-48D9-4E42-9896-94BF468CDBE7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5B68C099-48D9-4E42-9896-94BF468CDBE7}.Debug|Win32.Build.0 = Debug|Win32
+		{5B68C099-48D9-4E42-9896-94BF468CDBE7}.Release|Win32.ActiveCfg = Release|Win32
+		{5B68C099-48D9-4E42-9896-94BF468CDBE7}.Release|Win32.Build.0 = Release|Win32
+		{EF0F2696-2591-406C-A6C9-C06294BD062C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EF0F2696-2591-406C-A6C9-C06294BD062C}.Debug|Win32.Build.0 = Debug|Win32
+		{EF0F2696-2591-406C-A6C9-C06294BD062C}.Release|Win32.ActiveCfg = Release|Win32
+		{EF0F2696-2591-406C-A6C9-C06294BD062C}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
