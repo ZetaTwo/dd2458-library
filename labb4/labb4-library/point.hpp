@@ -19,6 +19,7 @@ public:
   point(const std::initializer_list<T>& list) : x(list[0]), y(list[1]) {}
 
   point& operator=(const point& other) { x = other.x; y = other.y; return *this; }
+  point& operator=(const point&& other) { x = other.x; y = other.y; return *this; }
   point& operator=(const std::initializer_list<T>& list) { x = list[0]; y = list[1]; return *this; }
   point& operator=(const std::pair<T, T>& pair) { x = pair.first; y = pair.second; return *this; }
 
@@ -59,6 +60,7 @@ public:
   T inner_product(const point& other) { return inner_product(*this, other); }
 
   static T cross_product(const point& a, const point& b) { return a.x * b.y - a.y * b.x; }
+  static T cross_product(const point& o, const point& a, const point& b) { return cross_product(a-o, b-o); }
   T cross_product(const point& other) { return cross_product(*this, other); }
 
   template<typename F>
@@ -194,63 +196,41 @@ int inside_poly(const point<T>& p, Iterator begin, Iterator end)
   return c;
 }
 
-
 template<typename T>
-T ccw(const point<T>& p1, const point<T>& p2, const point<T>& p3) {
-  return (p2.getX() - p1.getX())*(p3.getY() - p1.getY()) - (p2.getY() - p1.getY())*(p3.getX() - p1.getX());
-}
-template<typename T>
-struct ccw_sort {
-  point<T> pivot;
-  ccw_sort(const point<T>& p) : pivot(p) {}
-
-  bool operator()(const point<T>& a, const point<T>& b) {
-    return ccw(pivot, a, b) > 0;
+struct PointSortLexicographically {
+  bool operator ()(const point<T> &a, const point<T> &b) const {
+    return a.getX() < b.getX() || (a.getX() == b.getX() && a.getY() < b.getY());
   }
 };
 
 template<typename T, class Iterator>
 std::vector<point<T> > convex_hull(Iterator begin, Iterator end) {
   //Create list of N+1 points
-  const size_t N = end - begin;
-  std::vector<point<T> > points(1);
-  points.insert(points.end(), begin, end);
+  const size_t n = end - begin;
+  int k = 0;
+  vector<point<T> > P(begin, end);
+  vector<point<T> > H(2 * n);
 
-  //Pick point with lowest Y and place at index 1
-  auto low_itr = points.begin() + 1;
-  for (auto i = points.begin() + 1; i != points.end(); i++) {
-    if (i->getY() < low_itr->getY()) {
-      low_itr = i;
-    }
-    else if (i->getY() == low_itr->getY() && i->getX() < low_itr->getX()) {
-      low_itr = i;
-    }
-  }
-  std::swap(*(points.begin()+1), *low_itr);
-  
-  //Sort points by angle to pivot at index 1
-  std::sort(points.begin() + 2, points.end(), ccw_sort<T>(points[1]));
-  //Sentinel point P[0] = P[N]
-  points[0] = points.back();
+  // Sort points lexicographically
+  sort(P.begin(), P.end(), PointSortLexicographically<T>());
 
-  size_t M = 1;
-  for (size_t i = 2; i <= N; i++) {
-    while (ccw(points[M - 1], points[M], points[i]) <= 0)
-    {
-      if (M > 1) {
-        M--;
-      }
-      else if (M == 1) {
-        break;
-      }
-      else {
-        i++;
-      }
+  // Build lower hull
+  for (int i = 0; i < n; ++i) {
+    while (k >= 2 && point<T>::cross_product(H[k - 2], H[k - 1], P[i]) <= 0) {
+      k--;
     }
-    M++;
-    std::swap(points[M], points[i]);
+    H[k++] = P[i];
   }
- 
-  points.resize(M);
-  return points;
+
+  // Build upper hull
+  for (int i = n - 2, t = k + 1; i >= 0; i--) {
+    while (k >= t && point<T>::cross_product(H[k - 2], H[k - 1], P[i]) <= 0) {
+      k--;
+    }
+    H[k++] = P[i];
+  }
+
+  if (k == 3 && H[0] == H[1]) k--;
+  H.resize(std::max(1, k-1));
+  return H;
 }
