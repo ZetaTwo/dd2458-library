@@ -26,13 +26,13 @@ int main() {
       point<long long> p;
       cin >> p;
       switch (inside_poly(p, polygon.begin(), polygon.end())) {
-      case 0:
+      case -1:
         cout << "out";
         break;
-      case 1:
+      case 0:
         cout << "on";
         break;
-      case 2:
+      case 1:
         cout << "in";
         break;
       default:
