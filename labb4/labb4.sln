@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb4-pointinpolygon-runner
 		{1F0454E7-BB5E-4E1B-B727-6146B8FC77FC} = {1F0454E7-BB5E-4E1B-B727-6146B8FC77FC}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "labb4-convexhull-runner", "labb4-convexhull-runner\labb4-convexhull-runner.vcxproj", "{2045B245-251D-4A3F-B8D9-093FC94C0955}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -39,6 +41,10 @@ Global
 		{EF0F2696-2591-406C-A6C9-C06294BD062C}.Debug|Win32.Build.0 = Debug|Win32
 		{EF0F2696-2591-406C-A6C9-C06294BD062C}.Release|Win32.ActiveCfg = Release|Win32
 		{EF0F2696-2591-406C-A6C9-C06294BD062C}.Release|Win32.Build.0 = Release|Win32
+		{2045B245-251D-4A3F-B8D9-093FC94C0955}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2045B245-251D-4A3F-B8D9-093FC94C0955}.Debug|Win32.Build.0 = Debug|Win32
+		{2045B245-251D-4A3F-B8D9-093FC94C0955}.Release|Win32.ActiveCfg = Release|Win32
+		{2045B245-251D-4A3F-B8D9-093FC94C0955}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

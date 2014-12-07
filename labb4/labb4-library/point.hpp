@@ -16,11 +16,13 @@ public:
   point(const point& other) : x(other.x), y(other.y) {}
   point(const std::pair<T, T>& pair) : x(pair.first), y(pair.second) {}
   point(const point&& other) : x(other.x), y(other.y) {}
-  point(const initializer_list<T>& list) : x(list[0]), y(list[1]) {}
+  point(const std::initializer_list<T>& list) : x(list[0]), y(list[1]) {}
 
   point& operator=(const point& other) { x = other.x; y = other.y; return *this; }
-  point& operator=(const initializer_list<T>& list) { x = list[0]; y = list[1]; return *this; }
+  point& operator=(const std::initializer_list<T>& list) { x = list[0]; y = list[1]; return *this; }
   point& operator=(const std::pair<T, T>& pair) { x = pair.first; y = pair.second; return *this; }
+
+  bool operator==(const point& other) const { return x==other.x && y==other.y; }
 
   point& operator*=(const T& coeff) { x *= coeff; y *= coeff; return *this; }
   point operator*(const T& coeff) const { point res(*this); res *= coeff; return res; }
@@ -41,14 +43,12 @@ public:
   point operator-(const point& other) const { point res(*this); res -= other; return res; }
 
   template<typename F>
-  static F norm(const point& p) { return sqrt(p.x*p.x + p.y*p.y); }
+  static F norm(const point& p) { return sqrt(norm2(p)); }
   template<typename F>
   F norm() const { return norm(*this); }
 
-  template<typename F>
-  static F norm2(const point& p) { return p.x*p.x + p.y*p.y; }
-  template<typename F>
-  F norm2() const { return norm(*this); }
+  static T norm2(const point& p) { return p.x*p.x + p.y*p.y; }
+  T norm2() const { return norm2(*this); }
 
   template<typename F>
   static F dist(const point& a, const point& b) { return norm(a - b); }
@@ -69,12 +69,12 @@ public:
   const T& getX() const { return x; }
   const T& getY() const { return y; }
 
-  friend istream& operator>> (istream &input, point& p) {
+  friend std::istream& operator>> (std::istream &input, point& p) {
     input >> p.x >> p.y;
     return input;
   }
 
-  friend ostream& operator<< (ostream &output, point& p) {
+  friend std::ostream& operator<< (std::ostream &output, point& p) {
     output << "(" << p.x << "," << p.y << ")";
     return output;
   }
@@ -150,25 +150,107 @@ F polygon_area(Iterator begin, Iterator end) {
   return res/2;
 }
 
+template<typename T>
+bool on(const point<T>& p, const point<T>& a, const point<T>& b) {
+
+  if (p == a || p == b) {
+    return true;
+  }
+
+  point<T> d1 = b - a;
+  point<T> d2 = p - a;
+  T cross = point<T>::cross_product(d1, d2);
+
+  if (cross != 0) {
+    return false;
+  }
+
+  T dot = d1.inner_product(d2);
+  return dot > 0 && dot < d1.norm2();
+}
+
 template<typename T, class Iterator>
 int inside_poly(const point<T>& p, Iterator begin, Iterator end)
 {
   Iterator i, j;
   //Check if on boundary
   for (i = begin, j = end - 1; i != end; j = i++) {
-    T cross = point<T>::cross_product((*i - *j), (p - *j));
-    if (cross == 0) {
-      return 1;
+    if (on(p, *i, *j)) {
+      return 0;
     }
   }
 
   //Check if inside or outside
-  int c = 0;
+  int c = -1;
   for (i = begin, j = end - 1; i != end; j = i++) {
-    if (((i->getY() > p.getY()) != (j->getY() > p.getY())) &&
-      (p.getX() < (j->getX() - i->getX()) * static_cast<double>((p.getY() - i->getY())) / (j->getY() - i->getY()) + i->getX()))
-      c = 2-c;
+    if (
+      ((i->getY() > p.getY()) != (j->getY() > p.getY())) &&
+      (p.getX() < (j->getX() - i->getX()) * static_cast<double>(p.getY() - i->getY()) / (j->getY() - i->getY()) + i->getX())
+      ) {
+      c *= -1;
+    }
   }
 
   return c;
+}
+
+
+template<typename T>
+T ccw(const point<T>& p1, const point<T>& p2, const point<T>& p3) {
+  return (p2.getX() - p1.getX())*(p3.getY() - p1.getY()) - (p2.getY() - p1.getY())*(p3.getX() - p1.getX());
+}
+template<typename T>
+struct ccw_sort {
+  point<T> pivot;
+  ccw_sort(const point<T>& p) : pivot(p) {}
+
+  bool operator()(const point<T>& a, const point<T>& b) {
+    return ccw(pivot, a, b) > 0;
+  }
+};
+
+template<typename T, class Iterator>
+std::vector<point<T> > convex_hull(Iterator begin, Iterator end) {
+  //Create list of N+1 points
+  const size_t N = end - begin;
+  std::vector<point<T> > points(1);
+  points.insert(points.end(), begin, end);
+
+  //Pick point with lowest Y and place at index 1
+  auto low_itr = points.begin() + 1;
+  for (auto i = points.begin() + 1; i != points.end(); i++) {
+    if (i->getY() < low_itr->getY()) {
+      low_itr = i;
+    }
+    else if (i->getY() == low_itr->getY() && i->getX() < low_itr->getX()) {
+      low_itr = i;
+    }
+  }
+  std::swap(*(points.begin()+1), *low_itr);
+  
+  //Sort points by angle to pivot at index 1
+  std::sort(points.begin() + 2, points.end(), ccw_sort<T>(points[1]));
+  //Sentinel point P[0] = P[N]
+  points[0] = points.back();
+
+  size_t M = 1;
+  for (size_t i = 2; i <= N; i++) {
+    while (ccw(points[M - 1], points[M], points[i]) <= 0)
+    {
+      if (M > 1) {
+        M--;
+      }
+      else if (M == 1) {
+        break;
+      }
+      else {
+        i++;
+      }
+    }
+    M++;
+    std::swap(points[M], points[i]);
+  }
+ 
+  points.resize(M);
+  return points;
 }
